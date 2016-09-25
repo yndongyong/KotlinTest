@@ -1,4 +1,4 @@
-package com.example.dongzhiyong.kotlintest.data
+package com.example.dongzhiyong.kotlintest.net
 
 /**
  * object 定义的是类,只会生成一个对象,如同Java中的静态类

@@ -1,7 +1,5 @@
-package com.example.dongzhiyong.kotlintest.data
+package com.example.dongzhiyong.kotlintest.net
 
-import com.example.dongzhiyong.kotlintest.net.ApiJsonObjectCallBack
-import com.example.dongzhiyong.kotlintest.net.IAPICallBack
 import com.google.gson.Gson
 import com.zhy.http.okhttp.OkHttpUtils
 import okhttp3.MediaType
@@ -21,19 +19,19 @@ object Api {
                 .execute(ApiJsonObjectCallBack(callback))
     }
 
-    fun post(url: String, params: HashMap<String, Any>, callback: IAPICallBack,needLogin:Boolean? = true) {
+    fun post(url: String, params: HashMap<String, Any>?, callback: IAPICallBack, needLogin:Boolean? = true) {
         var paramPost = HashMap<String, Any>()
 
         //if url contains login url add baseRequest as Object
         if (needLogin!!) {
             paramPost.put("baseRequest","")
-
+        }
+        if (params!=null) {
             for ((key ,value) in params){
                 paramPost.put(key,value)
             }
-        }else{
-            paramPost = params
         }
+
         OkHttpUtils
                 .postString()
                 .url(url)

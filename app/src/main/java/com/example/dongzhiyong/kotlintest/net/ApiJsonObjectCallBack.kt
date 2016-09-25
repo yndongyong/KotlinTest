@@ -1,13 +1,10 @@
 package com.example.dongzhiyong.kotlintest.net
 
-import com.zhy.http.okhttp.callback.Callback
+import com.zhy.http.okhttp.callback.StringCallback
 import okhttp3.Call
-import okhttp3.Response
 import org.apache.http.conn.ConnectTimeoutException
-import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.io.IOException
 import java.net.ConnectException
 import java.net.SocketException
 import java.net.SocketTimeoutException
@@ -16,7 +13,7 @@ import java.net.UnknownHostException
 /**
  * Created by dongzhiyong on 16/9/25.
  */
-class ApiJsonObjectCallBack(call: IAPICallBack) : Callback<JSONObject>() {
+class ApiJsonObjectCallBack(call: IAPICallBack) : StringCallback() {
 
     val callback = call
 
@@ -41,16 +38,16 @@ class ApiJsonObjectCallBack(call: IAPICallBack) : Callback<JSONObject>() {
         callback.onFailed(errorCode, msg)
     }
 
-    override fun onResponse(response: JSONObject, id: Int) {
+    override fun onResponse(responseString: String, id: Int) {
         /**
          * {
          *    "succeed": true,
          *    "code": 0,
-         *    "msg": "上传文件成功",
+         *    "msg": "成功",
          *    "data":""
          * }
          */
-
+        var response = JSONObject(responseString)
         if (response.optInt("code", ERROR_TOKEN) == ERROR_TOKEN) {
             callback.onFailed(ERROR_TOKEN, response.optString("msg", "访问失败"))
         } else if (response.optInt("code", SUCCEESS_TOKEN) == SUCCEESS_TOKEN) {
@@ -60,12 +57,7 @@ class ApiJsonObjectCallBack(call: IAPICallBack) : Callback<JSONObject>() {
                 callback.onFailed(ERROR_TOKEN, response.optString("msg", "访问失败"))
             }
         }
-
-
     }
 
-    override fun parseNetworkResponse(response: Response?, id: Int): JSONObject {
-        return JSONObject(response!!.body().toString())
-    }
 }
 

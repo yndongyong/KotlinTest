@@ -2,8 +2,8 @@ package com.example.dongzhiyong.kotlintest
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.example.dongzhiyong.kotlintest.data.Api
-import com.example.dongzhiyong.kotlintest.data.UrlUtils
+import com.example.dongzhiyong.kotlintest.net.Api
+import com.example.dongzhiyong.kotlintest.net.UrlUtils
 import kotlinx.android.synthetic.main.activity_main.*
 
 import com.example.dongzhiyong.kotlintest.net.IAPICallBack
@@ -40,16 +40,16 @@ class MainActivity : AppCompatActivity() {
          }*/
 
         button.setOnClickListener {
-            Api.get(UrlUtils.schoolNewsUrl, object : IAPICallBack {
+            Api.post(UrlUtils.schoolNewsUrl,null, object : IAPICallBack {
                 override fun onSuccess(data: JSONObject) {
                     this@MainActivity.toast(data.toString())
                 }
 
                 override fun onFailed(code: Int, msg: String) {
-                    this@MainActivity.toast("code = $code ;msg = $msg")
+                    this@MainActivity.toast("code = $code ; msg = $msg")
                 }
 
-            })
+            },false)
         }
 
     }

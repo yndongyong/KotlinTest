@@ -1,7 +1,8 @@
 package com.example.dongzhiyong.kotlintest.net
 
-import com.zhy.http.okhttp.callback.StringCallback
+import com.zhy.http.okhttp.callback.Callback
 import okhttp3.Call
+import okhttp3.Response
 import org.apache.http.conn.ConnectTimeoutException
 import org.json.JSONException
 import org.json.JSONObject
@@ -13,7 +14,7 @@ import java.net.UnknownHostException
 /**
  * Created by dongzhiyong on 16/9/25.
  */
-class ApiJsonObjectCallBack(call: IAPICallBack) : StringCallback() {
+class ApiJsonObjectCallBack(call: IAPICallBack) : Callback<JSONObject>() {
 
     val callback = call
 
@@ -38,16 +39,16 @@ class ApiJsonObjectCallBack(call: IAPICallBack) : StringCallback() {
         callback.onFailed(errorCode, msg)
     }
 
-    override fun onResponse(responseString: String, id: Int) {
+    override fun onResponse(response: JSONObject, id: Int) {
         /**
          * {
          *    "succeed": true,
          *    "code": 0,
-         *    "msg": "成功",
+         *    "msg": "上传文件成功",
          *    "data":""
          * }
          */
-        var response = JSONObject(responseString)
+
         if (response.optInt("code", ERROR_TOKEN) == ERROR_TOKEN) {
             callback.onFailed(ERROR_TOKEN, response.optString("msg", "访问失败"))
         } else if (response.optInt("code", SUCCEESS_TOKEN) == SUCCEESS_TOKEN) {
@@ -57,7 +58,16 @@ class ApiJsonObjectCallBack(call: IAPICallBack) : StringCallback() {
                 callback.onFailed(ERROR_TOKEN, response.optString("msg", "访问失败"))
             }
         }
+
+
     }
 
+    override fun validateReponse(response: Response, id: Int): Boolean {
+        return super.validateReponse(response, id)
+    }
+
+    override fun parseNetworkResponse(response: Response, id: Int): JSONObject {
+        return JSONObject(response.body().string())
+    }
 }
 

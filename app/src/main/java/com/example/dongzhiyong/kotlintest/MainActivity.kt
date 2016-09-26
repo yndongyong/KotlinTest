@@ -7,6 +7,7 @@ import com.example.dongzhiyong.kotlintest.net.UrlUtils
 import kotlinx.android.synthetic.main.activity_main.*
 
 import com.example.dongzhiyong.kotlintest.net.IAPICallBack
+import okhttp3.Call
 import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
          }*/
 
         button.setOnClickListener {
-            Api.post(UrlUtils.schoolNewsUrl,null, object : IAPICallBack {
+            Api.post(UrlUtils.schoolNewsUrl, null,object : IAPICallBack {
                 override fun onSuccess(data: JSONObject) {
                     this@MainActivity.toast(data.toString())
                 }
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                     this@MainActivity.toast("code = $code ; msg = $msg")
                 }
 
-            },false)
+            })
         }
 
     }

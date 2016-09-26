@@ -44,7 +44,7 @@ class ApiJsonObjectCallBack(call: IAPICallBack) : Callback<JSONObject>() {
          * {
          *    "succeed": true,
          *    "code": 0,
-         *    "msg": "上传文件成功",
+         *    "msg": "成功",
          *    "data":""
          * }
          */
@@ -60,10 +60,6 @@ class ApiJsonObjectCallBack(call: IAPICallBack) : Callback<JSONObject>() {
         }
 
 
-    }
-
-    override fun validateReponse(response: Response, id: Int): Boolean {
-        return super.validateReponse(response, id)
     }
 
     override fun parseNetworkResponse(response: Response, id: Int): JSONObject {

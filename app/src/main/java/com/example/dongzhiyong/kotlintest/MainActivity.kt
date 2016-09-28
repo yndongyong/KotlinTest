@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
 
         button1.setOnClickListener {
-            Api.get(UrlUtils.schoolNewsUrl, object : IAPICallBack {
+            Api.get(UrlUtils.gankIOUrl, object : IAPICallBack {
                 override fun onSuccess(data: JSONObject) {
                     this@MainActivity.toast(data.toString())
                 }

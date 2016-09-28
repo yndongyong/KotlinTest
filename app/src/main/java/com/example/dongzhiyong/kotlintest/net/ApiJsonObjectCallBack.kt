@@ -42,14 +42,12 @@ class ApiJsonObjectCallBack(call: IAPICallBack) : Callback<JSONObject>() {
     override fun onResponse(response: JSONObject, id: Int) {
         /**
          * {
-         *    "succeed": true,
-         *    "code": 0,
-         *    "msg": "上传文件成功",
-         *    "data":""
+         *    "error": true,
+         *    "results":""
          * }
          */
 
-        if (response.optInt("code", ERROR_TOKEN) == ERROR_TOKEN) {
+        /*if (response.optInt("code", ERROR_TOKEN) == ERROR_TOKEN) {
             callback.onFailed(ERROR_TOKEN, response.optString("msg", "访问失败"))
         } else if (response.optInt("code", SUCCEESS_TOKEN) == SUCCEESS_TOKEN) {
             if (response.optJSONObject("data") != null || response.optJSONArray("data") != null) {
@@ -57,6 +55,11 @@ class ApiJsonObjectCallBack(call: IAPICallBack) : Callback<JSONObject>() {
             } else {
                 callback.onFailed(ERROR_TOKEN, response.optString("msg", "访问失败"))
             }
+        }*/
+        if (!response.optBoolean("error")) {
+            callback.onSuccess(response)
+        } else {
+            callback.onFailed(ERROR_TOKEN, "访问失败")
         }
 
 

@@ -13,6 +13,6 @@ object UrlUtils {
         return BASE_HOST + PROJECT_NAME + functionName
     }
 
-    val schoolNewsUrl: String
+    val gankIOUrl: String
         get() = "http://gank.io/api/data/Android/10/1"
 }

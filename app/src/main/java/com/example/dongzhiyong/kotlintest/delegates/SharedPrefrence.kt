@@ -5,10 +5,14 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 /**
- * 
+ *
  * Created by Dong on 2016/9/27.
  */
 object ShareData {
+
+    val PASSWORD_SP_KEY = "key_password"
+    val PASSWORD_SP_DEFAULT = 0
+
     /**
      * 定义一个函数使用委托
      */

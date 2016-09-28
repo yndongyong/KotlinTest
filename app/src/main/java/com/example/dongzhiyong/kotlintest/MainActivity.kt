@@ -1,5 +1,6 @@
 package com.example.dongzhiyong.kotlintest
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.example.dongzhiyong.kotlintest.delegates.ShareData
@@ -13,13 +14,9 @@ import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
 
-    companion object {
-        val PASSWORD_SP_KEY = "key_password"
-        val PASSWORD_SP_DEFAULT = 0
-    }
-
     //将一个属性，委托 给一个方法 ：属性委托
-    var password: Int by ShareData.prefrence(this, PASSWORD_SP_KEY, PASSWORD_SP_DEFAULT)
+    var password: Int by ShareData.prefrence(this, ShareData.PASSWORD_SP_KEY, ShareData.PASSWORD_SP_DEFAULT)
+    var usernmae: String by ShareData.prefrence(this, ShareData.PASSWORD_SP_KEY, "")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
 
         button1.setOnClickListener {
-            Api.post(UrlUtils.schoolNewsUrl, null, object : IAPICallBack {
+            Api.get(UrlUtils.schoolNewsUrl, object : IAPICallBack {
                 override fun onSuccess(data: JSONObject) {
                     this@MainActivity.toast(data.toString())
                 }
@@ -61,12 +58,22 @@ class MainActivity : AppCompatActivity() {
                     this@MainActivity.toast("code = $code ; msg = $msg")
                 }
 
-            }, false)
+            })
         }
 
         button2.setOnClickListener {
             this@MainActivity.toast(password.toString())
             password++
+        }
+        //打开 kotlin activity
+        button3.setOnClickListener {
+            val intent = Intent(this, SecondActivity::class.java)
+            startActivity(intent)
+        }
+        //打开 原生activity
+        button4.setOnClickListener {
+            val intent = Intent(this, NativeActivity::class.java)
+            startActivity(intent)
         }
 
     }

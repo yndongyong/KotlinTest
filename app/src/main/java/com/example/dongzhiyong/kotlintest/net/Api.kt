@@ -19,13 +19,13 @@ object Api {
                 .execute(ApiJsonObjectCallBack(callback))
     }
 
-    fun post(url: String, params: HashMap<String, Any>?, callback: IAPICallBack, needLogin: Boolean? = true) {
+    fun post(url: String, params: HashMap<String, Any>?, callback: IAPICallBack) {
         var paramPost = HashMap<String, Any>()
 
         //if url contains login url add baseRequest as Object
-        if (needLogin!!) {
+        /*if (needLogin!!) {
             paramPost.put("baseRequest", "")
-        }
+        }*/
         if (params != null) {
             for ((key, value) in params) {
                 paramPost.put(key, value)

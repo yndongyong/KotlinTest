@@ -19,7 +19,7 @@ class APP : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        
+
         val crashHandler = CrashHandler.getInstance()
         crashHandler.init(this.applicationContext)
 

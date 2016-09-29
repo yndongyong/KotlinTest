@@ -12,10 +12,26 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_second.*
 import org.json.JSONObject
+import kotlin.properties.Delegates
 
 class SecondActivity : AppCompatActivity() {
 
-    private val mAdapter: GankIOAdapter by lazy { GankIOAdapter() }
+    var pageIndex: Int by Delegates.observable(0) {
+        d, old, new ->
+        if (pageIndex == 0) {
+            //调用刷新
+
+        } else if (pageIndex > 0) {
+            //调用加载
+        }
+    }
+
+    private val mAdapter: GankIOAdapter by lazy {
+        GankIOAdapter {
+            gankIo, position ->
+            this@SecondActivity.toast(gankIo.toString())
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,13 +40,14 @@ class SecondActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        mAdapter.onItemClickListener = {
-            toast(it.toString())
-        }
+        /* mAdapter.onItemClickListener = {
+             toast(it.toString())
+         }*/
 
         rv_gank_list.adapter = mAdapter
         rv_gank_list.layoutManager = LinearLayoutManager(this)
         loadDataFromNet()
+
     }
 
     private fun loadDataFromNet() {
@@ -42,12 +59,12 @@ class SecondActivity : AppCompatActivity() {
                 val temp = optJSONArray.toString()
                 val response = GsonBuilder().create().fromJson<List<GankInfo>>(temp, type)
                 mAdapter.datas = response
+                this@SecondActivity.toast("success  ${getString(R.string.app_name)}")
             }
 
             override fun onFailed(code: Int, msg: String) {
                 this@SecondActivity.toast("code: $code, msg: $msg")
             }
-
         })
     }
 }

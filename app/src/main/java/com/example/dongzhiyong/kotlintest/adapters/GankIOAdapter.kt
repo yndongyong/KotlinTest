@@ -15,11 +15,13 @@ import kotlin.properties.Delegates
 /**
  * Created by Dong on 2016/9/28.
  */
-class GankIOAdapter : RecyclerView.Adapter<GankIOAdapter.ViewHolder>() {
+class GankIOAdapter(var onItemClickListener: ((GankInfo, Int) -> Unit)) : RecyclerView
+.Adapter<GankIOAdapter
+.ViewHolder>() {
 
     var datas: List<GankInfo> by Delegates.observable(emptyList()) { properties, old, new -> notifyDataSetChanged() }
 
-    var onItemClickListener: ((GankInfo) -> Unit)? = null
+//    var onItemClickListener: ((GankInfo) -> Unit)? = null
 
     override fun getItemCount(): Int = datas.size
 
@@ -27,14 +29,14 @@ class GankIOAdapter : RecyclerView.Adapter<GankIOAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = parent.inflate(R.layout.list_item_gank_layout)
-        return ViewHolder(view, onItemClickListener)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(datas[position])
+        holder.bind(datas[position], position, onItemClickListener)
     }
 
-    class ViewHolder(itemView: View, var itemCLick: ((GankInfo) -> Unit)?) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val iv_imageView: ImageView
         private val tv_desc: TextView
         private val tv_publishedAt: TextView
@@ -47,16 +49,16 @@ class GankIOAdapter : RecyclerView.Adapter<GankIOAdapter.ViewHolder>() {
             tv_who = itemView.findViewById(R.id.tv_who) as TextView
         }
 
-        fun bind(gankInfo: GankInfo) {
+        fun bind(gankInfo: GankInfo, position: Int, itemCLick: ((GankInfo, Int) -> Unit)?) {
             with(gankInfo) {
                 if (images != null) {
-                    val iconUrl = images[0]
+                    var iconUrl = images[0]
                     Glide.with(iv_imageView.ctx).load(iconUrl).into(iv_imageView)
                 }
                 tv_desc.text = desc
                 tv_publishedAt.text = publishedAt
                 tv_who.text = who
-                itemView.setOnClickListener { itemCLick?.invoke(gankInfo) }
+                itemView.setOnClickListener { itemCLick?.invoke(gankInfo, position) }
             }
         }
     }

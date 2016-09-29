@@ -19,3 +19,4 @@ fun Context.toast(msg: String, time: Int = Toast.LENGTH_SHORT) {
 }
 
 fun ViewGroup.inflate(layoutId: Int): View = LayoutInflater.from(this.context).inflate(layoutId, this, false)
+

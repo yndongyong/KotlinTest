@@ -22,7 +22,7 @@ object Api {
     }
 
     fun post(url: String, params: HashMap<String, Any>?, callback: IAPICallBack) {
-        val paramPost = HashMap<String, Any>()
+        var paramPost = HashMap<String, Any>()
 
         //if url contains login url add baseRequest as Object
         /*if (needLogin!!) {

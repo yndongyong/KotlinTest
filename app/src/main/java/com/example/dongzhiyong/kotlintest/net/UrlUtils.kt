@@ -6,13 +6,13 @@ package com.example.dongzhiyong.kotlintest.net
  */
 object UrlUtils {
 
-    private val BASE_HOST: String = "http://sch.expopay.cn"
+    private val BASE_HOST: String = "http://xxxxxxx"
     private val PROJECT_NAME = "/school/"
 
     private fun getUrl(functionName: String): String {
         return BASE_HOST + PROJECT_NAME + functionName
     }
 
-    val schoolNewsUrl: String
-        get() = getUrl("phone/style/list")
+    val gankIOUrl: String
+        get() = "http://gank.io/api/data/Android/10/1"
 }

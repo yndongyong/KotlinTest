@@ -76,18 +76,20 @@ class MainActivity : AppCompatActivity() {
         }
         //打开 原生activity
         button4.setOnClickListener {
-            /*val intent = Intent(this, NativeActivity::class.java)
-            startActivity(intent)*/
+            /* val intent = Intent(this, NativeActivity::class.java)
+             startActivity(intent)*/
+
+            readyGo<NativeActivity>()
 
             /* button4.snack("snackbar")
  
              button4.snack("snackbar", Snackbar.LENGTH_LONG)*/
 
-            button4.snack("snackbar") {
-                action("acttion") {
-                    this@MainActivity.toast("toast")
-                }
-            }
+            /* button4.snack("snackbar") {
+                 action("acttion") {
+                     this@MainActivity.toast("toast")
+                 }
+             }*/
 
         }
 

@@ -3,16 +3,13 @@ package com.example.dongzhiyong.kotlintest
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import com.example.dongzhiyong.kotlintest.delegates.ShareData
-import com.example.dongzhiyong.kotlintest.net.Api
-import com.example.dongzhiyong.kotlintest.net.UrlUtils
+import com.example.dongzhiyong.kotlintest.extensions.*
 import kotlinx.android.synthetic.main.activity_main.*
+import java.net.URL
 
-
-import com.example.dongzhiyong.kotlintest.net.IAPICallBack
-import okhttp3.Call
-import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,25 +31,45 @@ class MainActivity : AppCompatActivity() {
         button1.text = "获取网络数据"
 
         // bind listener way 1 匿名函数
-        /* button.setOnClickListener (object :View.OnClickListener{
-             override fun onClick(v: View?) {
+        /*button1.setOnClickListener (object : View.OnClickListener{
+            override fun onClick(v: View?) {
 
+            }
+        })*/
 
-             }
-         })*/
+        /*button1.setOnClickListener {
+            View.OnClickListener({
+                this@MainActivity.toast(password.toString())
+            })
+        }*/
+
         //bind listen way 2 lambda表达式
-        /* button.setOnClickListener {
+        /* button1.setOnClickListener {
              //load data form net
-             Thread{
+             Thread {
                  var response = URL("https://www.baidu.com").readText()
                  runOnUiThread { toast(response) }
              }.start()
-
          }*/
 
 
 
-        btn_button1.setOnClickListener {
+
+        button1.onClick {
+//             this@MainActivity.toast("onClick")
+            runAsync {
+                var response = URL("https://www.baidu.com").readText()
+                runUiThread { toast(response) }
+            }
+
+        }
+
+        button1.onLongClick {
+            this@MainActivity.toast("onLongClick")
+            true
+        }
+
+        /*btn_button1.setOnClickListener {
             Api.get(UrlUtils.gankIOUrl, object : IAPICallBack {
                 override fun onSuccess(data: JSONObject) {
                     this@MainActivity.toast(data.toString())
@@ -63,7 +80,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
             })
-        }
+        }*/
 
         button2.setOnClickListener {
             this@MainActivity.toast(password.toString())
@@ -71,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         }
         //打开 kotlin activity
         button3.setOnClickListener {
-            val intent = Intent(this, SecondActivity::class.java)
+            val intent = IntentFor<SecondActivity>()
             startActivity(intent)
         }
         //打开 原生activity

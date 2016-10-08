@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.example.dongzhiyong.kotlintest.adapters.GankIOAdapter
+import com.example.dongzhiyong.kotlintest.extensions.toast
 import com.example.dongzhiyong.kotlintest.model.GankInfo
 import com.example.dongzhiyong.kotlintest.net.Api
 import com.example.dongzhiyong.kotlintest.net.IAPICallBack

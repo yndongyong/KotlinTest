@@ -7,8 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.dongzhiyong.kotlintest.R
-import com.example.dongzhiyong.kotlintest.inflate
-import com.example.dongzhiyong.kotlintest.loadByUrl
+import com.example.dongzhiyong.kotlintest.extensions.inflate
+import com.example.dongzhiyong.kotlintest.extensions.loadByUrl
 import com.example.dongzhiyong.kotlintest.model.GankInfo
 import kotlin.properties.Delegates
 import kotlinx.android.synthetic.main.list_item_gank_layout.view.*

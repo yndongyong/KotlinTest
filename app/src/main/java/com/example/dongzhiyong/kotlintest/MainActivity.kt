@@ -1,9 +1,7 @@
 package com.example.dongzhiyong.kotlintest
 
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import com.example.dongzhiyong.kotlintest.delegates.ShareData
 import com.example.dongzhiyong.kotlintest.extensions.*
@@ -61,6 +59,10 @@ class MainActivity : AppCompatActivity() {
                 var response = URL("https://www.baidu.com").readText()
                 runUiThread { toast(response) }
             }
+
+            /* runUIThread(3000) {
+                 toast("toast")
+             }*/
 
         }
 

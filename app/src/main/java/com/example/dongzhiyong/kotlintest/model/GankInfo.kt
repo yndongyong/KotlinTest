@@ -3,10 +3,17 @@ package com.example.dongzhiyong.kotlintest.model
 /**
  * Created by Dong on 2016/9/28.
  */
-data class GankInfo(var _id: String, var createdAt: String, var desc: String, var
-images: List<String> , var publishedAt: String, var source: String, var type: String, var
-                    url: String, var used: Boolean = false, var who: String)
-
+data class GankInfo(
+        var _id: String,
+        var createdAt: String,
+        var desc: String,
+        var images: List<String>,
+        var publishedAt: String,
+        var source: String,
+        var type: String,
+        var url: String,
+        var used: Boolean = false,
+        var who: String)
 
 /*{
     "_id": "57eb0100421aa95de3b8ab00",

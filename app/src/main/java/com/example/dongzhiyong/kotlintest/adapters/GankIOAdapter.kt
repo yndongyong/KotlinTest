@@ -3,24 +3,23 @@ package com.example.dongzhiyong.kotlintest.adapters
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import com.bumptech.glide.Glide
 import com.example.dongzhiyong.kotlintest.R
 import com.example.dongzhiyong.kotlintest.extensions.inflate
 import com.example.dongzhiyong.kotlintest.extensions.loadByUrl
+import com.example.dongzhiyong.kotlintest.extensions.onClick
 import com.example.dongzhiyong.kotlintest.model.GankInfo
-import kotlin.properties.Delegates
 import kotlinx.android.synthetic.main.list_item_gank_layout.view.*
+import kotlin.properties.Delegates
 
 /**
  * Created by Dong on 2016/9/28.
  */
-class GankIOAdapter(var onItemClickListener: ((GankInfo, Int) -> Unit)) : RecyclerView
-.Adapter<GankIOAdapter
-.ViewHolder>() {
+class GankIOAdapter(var onItemClickListener: ((GankInfo, Int) -> Unit)) : RecyclerView.Adapter<GankIOAdapter.ViewHolder>() {
 
-    var datas: List<GankInfo> by Delegates.observable(emptyList()) { properties, old, new -> notifyDataSetChanged() }
+    var datas: List<GankInfo> by Delegates.observable(emptyList()) {
+        properties, old, new ->
+        notifyDataSetChanged()
+    }
 
 //    var onItemClickListener: ((GankInfo) -> Unit)? = null
 
@@ -34,7 +33,7 @@ class GankIOAdapter(var onItemClickListener: ((GankInfo, Int) -> Unit)) : Recycl
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(datas[position], position, onItemClickListener)
+        holder.bind(datas[position], position)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -50,7 +49,7 @@ class GankIOAdapter(var onItemClickListener: ((GankInfo, Int) -> Unit)) : Recycl
             tv_who = itemView.findViewById(R.id.tv_who) as TextView
         }*/
 
-        fun bind(gankInfo: GankInfo, position: Int, itemCLick: ((GankInfo, Int) -> Unit)?) {
+        fun bind(gankInfo: GankInfo, position: Int) {
             with(gankInfo) {
 
                 //way 1
@@ -68,13 +67,15 @@ class GankIOAdapter(var onItemClickListener: ((GankInfo, Int) -> Unit)) : Recycl
                 itemView.apply {
                     if (images != null) {
                         var iconUrl = images[0]
-                        iv_imageView.loadByUrl(iconUrl)
+                        iconUrl.let { iv_imageView.loadByUrl(it) }
+                    } else {
+                        iv_imageView.visibility = View.INVISIBLE
                     }
                     tv_desc.text = desc
                     tv_publishedAt.text = publishedAt
                     tv_who.text = who
-                    setOnClickListener {
-                        itemCLick?.invoke(gankInfo, position)
+                    onClick {
+                        onItemClickListener?.invoke(gankInfo, position)
                     }
 
                 }

@@ -22,10 +22,12 @@ val View.ctx: Context
     get() = context
 
 
-operator fun ViewGroup.get(pos: Int) = getChildAt(pos)
+operator fun ViewGroup.get(pos: Int): View = getChildAt(pos)
 
 fun ViewGroup.inflate(@LayoutRes layoutId: Int, attachToRoot: Boolean = false): View
         = LayoutInflater.from(this.context).inflate(layoutId, this, attachToRoot)
+
+inline fun <reified t : View> View.findV(viewId: Int): View = findViewById(viewId)
 
 fun View.snack(message: String, duration: Int = Snackbar.LENGTH_SHORT) {
     val snackbar = Snackbar.make(this, message, duration)

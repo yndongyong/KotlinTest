@@ -33,7 +33,27 @@ class GankIOAdapter(var onItemClickListener: ((GankInfo, Int) -> Unit)) : Recycl
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(datas[position], position)
+       bind(holder,datas[position], position)
+    }
+
+    fun bind(holder: ViewHolder, gankInfo: GankInfo, position: Int) {
+        with(gankInfo) {
+            holder.itemView.apply {
+                if (images != null) {
+                    var iconUrl = images[0]
+                    iconUrl.let { iv_imageView.loadByUrl(it) }
+                } else {
+                    iv_imageView.visibility = View.INVISIBLE
+                }
+                tv_desc.text = desc
+                tv_publishedAt.text = publishedAt
+                tv_who.text = who
+                onClick {
+                    onItemClickListener?.invoke(gankInfo, position)
+                }
+
+            }
+        }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -64,7 +84,7 @@ class GankIOAdapter(var onItemClickListener: ((GankInfo, Int) -> Unit)) : Recycl
                  itemView.setOnClickListener { itemCLick?.invoke(gankInfo, position) }*/
 
                 //way 2
-                itemView.apply {
+               /* itemView.apply {
                     if (images != null) {
                         var iconUrl = images[0]
                         iconUrl.let { iv_imageView.loadByUrl(it) }
@@ -78,7 +98,7 @@ class GankIOAdapter(var onItemClickListener: ((GankInfo, Int) -> Unit)) : Recycl
                         onItemClickListener?.invoke(gankInfo, position)
                     }
 
-                }
+                }*/
             }
         }
     }

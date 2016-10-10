@@ -45,6 +45,10 @@ class SecondActivity : AppCompatActivity() {
              toast(it.toString())
          }*/
 
+        var param1 = intent?.getStringExtra("param1")
+        toast("param1:"+param1)
+
+
         rv_gank_list.adapter = mAdapter
         rv_gank_list.layoutManager = LinearLayoutManager(this)
         loadDataFromNet()

@@ -9,9 +9,7 @@ import android.view.View
  * 关于 Activity的 扩展属性、扩展函数集合
  * Created by Dong on 2016/10/8.
  */
-inline fun <reified T : View> Activity.find(viewId: Int): T = findViewById(viewId) as T
-
-inline fun <reified T : Activity> Activity.IntentFor(): Intent = Intent(this, T::class.java)
+inline fun <reified T : View> Activity.findV(viewId: Int): T = findViewById(viewId) as T
 
 
 inline fun <reified T : Activity> Activity.readyGo() {
@@ -47,4 +45,25 @@ inline fun <reified T : Activity> Activity.readyGoForResult(requestCode: Int, bu
     intent.putExtras(bundle)
     startActivityForResult(intent, requestCode)
 }
+
+inline fun <reified T : Activity> Activity.IntentFor(): Intent = Intent(this, T::class.java)
+
+inline fun <reified T : Activity> Activity.IntentFor(bundle: Bundle): Intent {
+    val intent = Intent(this, T::class.java)
+    intent.putExtras(bundle)
+    return intent
+}
+
+fun Intent.startActivity(activity: Activity) {
+    activity.startActivity(this)
+}
+
+fun Intent.startActivityForResult(activity: Activity, requestCode: Int) {
+    activity.startActivityForResult(this, requestCode)
+}
+
+fun Intent.startActivityForResult(activity: Activity, requestCode: Int, options: Bundle) {
+    activity.startActivityForResult(this, requestCode, options)
+}
+
 

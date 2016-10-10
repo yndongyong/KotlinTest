@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     var password: Int by ShareData.prefrence(this, ShareData.PASSWORD_SP_KEY, ShareData.PASSWORD_SP_DEFAULT)
     var usernmae: String by ShareData.prefrence(this, ShareData.PASSWORD_SP_KEY, "")
 
-    val btn_button1: Button by lazy { find<Button>(R.id.button1) }
+    val btn_button1: Button by lazy { findV<Button>(R.id.button1) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +49,6 @@ class MainActivity : AppCompatActivity() {
                  runOnUiThread { toast(response) }
              }.start()
          }*/
-
-
 
 
         button1.onClick {
@@ -90,8 +88,30 @@ class MainActivity : AppCompatActivity() {
         }
         //打开 kotlin activity
         button3.setOnClickListener {
-            val intent = IntentFor<SecondActivity>()
-            startActivity(intent)
+            /*val intent = IntentFor<SecondActivity>()
+            intent.putExtras(BundleWrapper {
+                putString("param1", "1")
+                putString("param2", "2")
+            })
+//            startActivity(intent)
+            intent.startActivity(this@MainActivity)*/
+
+//            IntentFor<SecondActivity>().startActivity(this)
+
+            /*  IntentFor<SecondActivity>(BundleWrapper {
+                  putString("param1", "1")
+                  putString("param2", "2")
+              }).startActivity(this)*/
+
+            val params = "1"
+
+            IntentFor<SecondActivity>(
+                    BundleWrapper {
+                        putString("param1", params)
+                        putString("param2", "2")
+                    }
+            ).startActivityForResult(this, 1001)
+
         }
         //打开 原生activity
         button4.setOnClickListener {
@@ -109,13 +129,6 @@ class MainActivity : AppCompatActivity() {
                      this@MainActivity.toast("toast")
                  }
              }*/
-
-        }
-
-    }
-
-    class myrunnable : Runnable {
-        override fun run() {
 
         }
     }

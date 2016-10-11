@@ -8,10 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
-import android.widget.AdapterView
-import android.widget.ImageView
-import android.widget.ListView
+import android.widget.*
 import com.bumptech.glide.Glide
 
 /**
@@ -46,6 +43,10 @@ fun View.snack(message: String, duration: Int = Snackbar.LENGTH_SHORT, f: (Snack
 fun Snackbar.action(action: String, color: Int? = null, listener: (View) -> Unit) {
     setAction(action, listener)
     color?.let { setActionTextColor(color) }
+}
+
+fun View.toast(msg: String, time: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(ctx, msg, time).show()
 }
 
 

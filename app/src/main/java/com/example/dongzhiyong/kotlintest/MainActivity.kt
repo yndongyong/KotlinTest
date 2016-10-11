@@ -2,6 +2,7 @@ package com.example.dongzhiyong.kotlintest
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.widget.Button
 import com.example.dongzhiyong.kotlintest.delegates.ShareData
 import com.example.dongzhiyong.kotlintest.extensions.*
@@ -9,7 +10,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.net.URL
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ToolBarWrapper {
+
+    override val toolBar: Toolbar by lazy { findV<Toolbar>(R.id.toolbar) }
 
     //将一个属性，委托 给一个方法 ：属性委托
     var password: Int by ShareData.prefrence(this, ShareData.PASSWORD_SP_KEY, ShareData.PASSWORD_SP_DEFAULT)
@@ -20,6 +23,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        toolBarTitle = "custom title"
+
+        setupNavigationIcon(R.mipmap.ic_launcher) {
+            toast("右上角点击")
+        }
+
+
         initEvent(savedInstanceState)
     }
 
@@ -105,12 +116,13 @@ class MainActivity : AppCompatActivity() {
 
             val params = "1"
 
-            IntentFor<SecondActivity>(
+            /*IntentFor<SecondActivity>(
                     BundleWrapper {
                         putString("param1", params)
                         putString("param2", "2")
                     }
-            ).startActivityForResult(this, 1001)
+            ).startActivityForResult(this, 1001)*/
+            readyGo<SecondActivity>("param1" to "1", "param2" to "2")
 
         }
         //打开 原生activity

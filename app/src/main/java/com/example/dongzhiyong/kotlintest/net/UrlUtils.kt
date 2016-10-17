@@ -15,4 +15,7 @@ object UrlUtils {
 
     val gankIOUrl: String
         get() = "http://gank.io/api/data/Android/10/1"
+
+    val loginUrl: String
+        get() = getUrl("phone/login")
 }

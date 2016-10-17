@@ -1,6 +1,7 @@
 package com.example.dongzhiyong.kotlintest.delegates
 
 import android.content.Context
+import android.content.SharedPreferences
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -26,7 +27,7 @@ object ShareData {
 class SharedPrefrenceDelegate<T>(val context: Context, val key: String, val default: T) :
         ReadWriteProperty<Any, T> {
 
-    val sp by lazy { context.getSharedPreferences("shared_default", Context.MODE_PRIVATE) }
+    val sp: SharedPreferences by lazy { context.getSharedPreferences("shared_default", Context.MODE_PRIVATE) }
 
     override fun getValue(thisRef: Any, property: KProperty<*>): T {
         return findPrefrences(key, default)
@@ -43,7 +44,7 @@ class SharedPrefrenceDelegate<T>(val context: Context, val key: String, val defa
             is Long -> getLong(key, default)
             is Float -> getFloat(key, default)
             is Boolean -> getBoolean(key, default)
-            else -> throw IllegalArgumentException("This type can be saved into Preferences")
+            else -> throw IllegalArgumentException("This type can not be saved into Preferences")
         }
 
         result as U
@@ -56,7 +57,7 @@ class SharedPrefrenceDelegate<T>(val context: Context, val key: String, val defa
             is Long -> putLong(key, value)
             is Float -> putFloat(key, value)
             is Boolean -> putBoolean(key, value)
-            else -> throw IllegalArgumentException("This type can be saved into Preferences")
+            else -> throw IllegalArgumentException("This type can not be saved into Preferences")
         }.apply()
     }
 

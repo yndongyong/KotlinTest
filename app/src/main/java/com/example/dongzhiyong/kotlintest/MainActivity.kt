@@ -1,17 +1,12 @@
 package com.example.dongzhiyong.kotlintest
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
 import com.example.dongzhiyong.kotlintest.delegates.ShareData
 import com.example.dongzhiyong.kotlintest.extensions.*
 import kotlinx.android.synthetic.main.activity_main.*
-import java.net.URL
 
 
 class MainActivity : AppCompatActivity(), ToolBarWrapper {
@@ -109,11 +104,6 @@ class MainActivity : AppCompatActivity(), ToolBarWrapper {
             true
         }
 
-        button1.onLongClick {
-            this@MainActivity.toast("onLongClick")
-            true
-        }
-
         /*btn_button1.setOnClickListener {
             Api.get(UrlUtils.gankIOUrl, object : IAPICallBack {
                 override fun onSuccess(data: JSONObject) {
@@ -126,13 +116,12 @@ class MainActivity : AppCompatActivity(), ToolBarWrapper {
 
             })
         }*/
-
-        button2.setOnClickListener {
+        button2.onClick {
             this@MainActivity.toast(password.toString())
             password++
         }
         //打开 kotlin activity
-        button3.setOnClickListener {
+        button3.onClick {
             val intent = IntentFor<SecondActivity>()
             val bundle = BundleWrapper {
                 putString("param1", "1")
@@ -158,7 +147,7 @@ class MainActivity : AppCompatActivity(), ToolBarWrapper {
 
         }
         //打开 原生activity
-        button4.setOnClickListener {
+        button4.onClick {
             /* val intent = Intent(this, NativeActivity::class.java)
              startActivity(intent)*/
 

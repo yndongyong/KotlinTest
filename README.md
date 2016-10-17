@@ -139,8 +139,15 @@
             }		
 			
 	
-7.   待续。。。
+7.   SharedPreferences相关，使用属性委托的思想封装SharedPreferences
+	
+		用法：
+		var password: String by ShareData.prefrence(this, "key_password", "DEFAULT_vlaue")
+		当在代码中对password重新赋值时，会自动更新SharedPreferences中的值。
+
 8.   待续。。。
+
+9.   待续。。。
         
 
 

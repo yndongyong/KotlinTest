@@ -1,10 +1,8 @@
 package com.example.dongzhiyong.kotlintest.extensions
 
 import android.content.Context
-import android.content.DialogInterface
 import android.support.annotation.LayoutRes
 import android.support.design.widget.Snackbar
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,13 +16,12 @@ import com.bumptech.glide.Glide
 val View.ctx: Context
     get() = context
 
-
 operator fun ViewGroup.get(pos: Int): View = getChildAt(pos)
 
 fun ViewGroup.inflate(@LayoutRes layoutId: Int, attachToRoot: Boolean = false): View
         = LayoutInflater.from(this.context).inflate(layoutId, this, attachToRoot)
 
-inline fun <reified t : View> View.findV(viewId: Int): View = findViewById(viewId)
+inline fun <reified T : View> View.findV(viewId: Int): View = findViewById(viewId) as T
 
 fun View.snack(message: String, duration: Int = Snackbar.LENGTH_SHORT) {
     val snackbar = Snackbar.make(this, message, duration)
@@ -33,12 +30,12 @@ fun View.snack(message: String, duration: Int = Snackbar.LENGTH_SHORT) {
 
 fun View.snack(message: String, duration: Int = Snackbar.LENGTH_SHORT, f: (Snackbar.() -> Unit)?) {
     val snackbar = Snackbar.make(this, message, duration)
+
     if (f != null) {
         snackbar.f()
     }
     snackbar.show()
 }
-
 
 fun Snackbar.action(action: String, color: Int? = null, listener: (View) -> Unit) {
     setAction(action, listener)

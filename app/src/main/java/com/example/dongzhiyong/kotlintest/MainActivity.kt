@@ -1,9 +1,13 @@
 package com.example.dongzhiyong.kotlintest
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import com.example.dongzhiyong.kotlintest.delegates.ShareData
 import com.example.dongzhiyong.kotlintest.extensions.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -11,6 +15,10 @@ import java.net.URL
 
 
 class MainActivity : AppCompatActivity(), ToolBarWrapper {
+
+    companion object {
+        var REQUEST_CODE = 1001
+    }
 
     override val toolBar: Toolbar by lazy { findV<Toolbar>(R.id.toolbar) }
 
@@ -64,15 +72,41 @@ class MainActivity : AppCompatActivity(), ToolBarWrapper {
 
         button1.onClick {
 //             this@MainActivity.toast("onClick")
-            runAsync {
-                var response = URL("https://www.baidu.com").readText()
-                runUiThread { toast(response) }
-            }
 
-            /* runUIThread(3000) {
-                 toast("toast")
+
+//            btn_button1.toast("toast")
+//            btn_button1.toast("toast",Toast.LENGTH_LONG)
+
+//            btn_button1.snack("msg")
+//            btn_button1.snack("msg", Snackbar.LENGTH_SHORT)
+            /*btn_button1.snack("msg", Snackbar.LENGTH_SHORT) {
+                action("action") {
+                    this@MainActivity.toast("action toast")
+                }
+            }*/
+
+            /* runAsync {
+                 var response = URL("https://www.baidu.com").readText()
+                 runUiThread { toast(response) }
              }*/
+           /* runUiThread {
+                //do work
+            }*/
 
+            runUiThread(2000) {
+                //do work delay 2's
+            }
+            
+
+        }
+
+        button1.onClick { 
+            //do work
+        }
+
+        button1.onLongClick {
+            this@MainActivity.toast("onLongClick")
+            true
         }
 
         button1.onLongClick {
@@ -99,30 +133,28 @@ class MainActivity : AppCompatActivity(), ToolBarWrapper {
         }
         //打开 kotlin activity
         button3.setOnClickListener {
-            /*val intent = IntentFor<SecondActivity>()
-            intent.putExtras(BundleWrapper {
+            val intent = IntentFor<SecondActivity>()
+            val bundle = BundleWrapper {
                 putString("param1", "1")
+
                 putString("param2", "2")
-            })
-//            startActivity(intent)
-            intent.startActivity(this@MainActivity)*/
-
-//            IntentFor<SecondActivity>().startActivity(this)
-
-            /*  IntentFor<SecondActivity>(BundleWrapper {
-                  putString("param1", "1")
-                  putString("param2", "2")
-              }).startActivity(this)*/
+            }
+            intent.putExtras(bundle)
+            startActivity(intent)
 
             val params = "1"
 
-            /*IntentFor<SecondActivity>(
-                    BundleWrapper {
-                        putString("param1", params)
-                        putString("param2", "2")
-                    }
-            ).startActivityForResult(this, 1001)*/
-            readyGo<SecondActivity>("param1" to "1", "param2" to "2")
+            // startActivity
+//            readyGo<SecondActivity>()
+
+            readyGo<SecondActivity>("param1" to params, "param2" to "2")
+
+//            readyGoForResult<SecondActivity>(REQUEST_CODE)
+
+//            readyGoForResult<SecondActivity>(REQUEST_CODE, "param1" to "1", "param2" to "2")
+
+
+            readyGoThenKill<SecondActivity>("param1" to "1", "param2" to "2")
 
         }
         //打开 原生activity
@@ -143,5 +175,10 @@ class MainActivity : AppCompatActivity(), ToolBarWrapper {
              }*/
 
         }
+        
+        
+
     }
+
+    
 }

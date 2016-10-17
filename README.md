@@ -1,5 +1,5 @@
 
-##Kotlin libaray of Android
+##Kotlin library of Android
 
 一些使用示例
 

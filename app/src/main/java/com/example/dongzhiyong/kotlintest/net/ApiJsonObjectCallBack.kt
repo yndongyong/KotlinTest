@@ -49,15 +49,22 @@ class ApiJsonObjectCallBack(call: IAPICallBack) : Callback<JSONObject>() {
          * }
          */
 
-        /*if (response.optInt("code", ERROR_TOKEN) == ERROR_TOKEN) {
-            callback.onFailed(ERROR_TOKEN, response.optString("msg", "访问失败"))
-        } else if (response.optInt("code", SUCCEESS_TOKEN) == SUCCEESS_TOKEN) {
-            if (response.optJSONObject("data") != null || response.optJSONArray("data") != null) {
-                callback.onSuccess(response)
-            } else {
-                callback.onFailed(ERROR_TOKEN, response.optString("msg", "访问失败"))
+
+        /*val code = response.optInt("code", -1)
+        val errorMsg = response.optString("msg")
+        when (code) {
+            0 -> {
+                callback.let { callback.onSuccess(response) }
+            }
+            -1 -> {
+                callback.let { callback.onFailed(code, errorMsg) }
+            }
+            else -> {
+                callback.let { callback.onFailed(code, errorMsg) }
             }
         }*/
+
+
         if (!response.optBoolean("error")) {
             callback.onSuccess(response)
         } else {

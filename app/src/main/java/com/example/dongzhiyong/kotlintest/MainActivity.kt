@@ -1,5 +1,7 @@
 package com.example.dongzhiyong.kotlintest
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
@@ -35,12 +37,18 @@ class MainActivity : AppCompatActivity(), ToolBarWrapper {
 
 
         initEvent(savedInstanceState)
+
     }
 
     fun initEvent(savedInstanceState: Bundle?) {
         var name: String? = "Hello Dong"
-        tv_title.text = name
+//        tv_title.text = name
         button1.text = "获取网络数据"
+
+
+        with(tv_title) {
+            text = name
+        }
 
         // bind listener way 1 匿名函数
         /*button1.setOnClickListener (object : View.OnClickListener{
@@ -68,7 +76,6 @@ class MainActivity : AppCompatActivity(), ToolBarWrapper {
         button1.onClick {
 //             this@MainActivity.toast("onClick")
 
-
 //            btn_button1.toast("toast")
 //            btn_button1.toast("toast",Toast.LENGTH_LONG)
 
@@ -84,20 +91,20 @@ class MainActivity : AppCompatActivity(), ToolBarWrapper {
                  var response = URL("https://www.baidu.com").readText()
                  runUiThread { toast(response) }
              }*/
-           /* runUiThread {
-                //do work
-            }*/
+            /* runUiThread {
+                 //do work
+             }*/
 
             runUiThread(2000) {
                 //do work delay 2's
             }
-            
+
 
         }
 
-        button1.onClick { 
+        /*button1.onClick { 
             //do work
-        }
+        }*/
 
         button1.onLongClick {
             this@MainActivity.toast("onLongClick")
@@ -122,14 +129,14 @@ class MainActivity : AppCompatActivity(), ToolBarWrapper {
         }
         //打开 kotlin activity
         button3.onClick {
-            val intent = IntentFor<SecondActivity>()
+            /*val intent = IntentFor<SecondActivity>()
             val bundle = BundleWrapper {
                 putString("param1", "1")
 
                 putString("param2", "2")
             }
             intent.putExtras(bundle)
-            startActivity(intent)
+            startActivity(intent)*/
 
             val params = "1"
 
@@ -142,14 +149,16 @@ class MainActivity : AppCompatActivity(), ToolBarWrapper {
 
 //            readyGoForResult<SecondActivity>(REQUEST_CODE, "param1" to "1", "param2" to "2")
 
-
-            readyGoThenKill<SecondActivity>("param1" to "1", "param2" to "2")
+//            readyGoThenKill<SecondActivity>("param1" to "1", "param2" to "2")
 
         }
         //打开 原生activity
         button4.onClick {
-            /* val intent = Intent(this, NativeActivity::class.java)
-             startActivity(intent)*/
+            /*val intent = Intent(this, NativeActivity::class.java).apply { 
+                putExtra("","")
+                putExtra("",false)
+            }
+            startActivity(intent)*/
 
             readyGo<NativeActivity>()
 
@@ -164,10 +173,24 @@ class MainActivity : AppCompatActivity(), ToolBarWrapper {
              }*/
 
         }
-        
-        
+        button5.onClick {
+            AlertDialog.Builder(this@MainActivity).apply {
+                setTitle(R.string.app_name)
+                setCancelable(false)
+                setPositiveButton(R.string.btn_ensure) {
+                    dialog, which ->
+                    dialog.dismiss()
+                    this@MainActivity.toast("dialog positive dismiss")
+                }
+                setNegativeButton(R.string.btn_cancel) {
+                    dialog, which ->
+                    dialog.dismiss()
+                    this@MainActivity.toast("dialog negative dismiss")
+                }
+            }.show()
+        }
 
     }
 
-    
+
 }

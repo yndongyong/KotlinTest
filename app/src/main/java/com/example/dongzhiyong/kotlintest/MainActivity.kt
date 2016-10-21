@@ -97,6 +97,7 @@ class MainActivity : AppCompatActivity(), ToolBarWrapper {
 
             runUiThread(2000) {
                 //do work delay 2's
+                d("错误消息")
             }
 
 

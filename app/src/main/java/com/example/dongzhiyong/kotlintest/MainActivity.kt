@@ -1,7 +1,6 @@
 package com.example.dongzhiyong.kotlintest
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
@@ -34,7 +33,6 @@ class MainActivity : AppCompatActivity(), ToolBarWrapper {
         setupNavigationIcon(R.mipmap.ic_launcher) {
             toast("右上角点击")
         }
-
 
         initEvent(savedInstanceState)
 

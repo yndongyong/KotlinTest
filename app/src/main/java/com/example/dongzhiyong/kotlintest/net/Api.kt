@@ -3,15 +3,20 @@ package com.example.dongzhiyong.kotlintest.net
 import com.google.gson.Gson
 import com.zhy.http.okhttp.OkHttpUtils
 import com.zhy.http.okhttp.callback.FileCallBack
+import com.zhy.http.okhttp.log.LoggerInterceptor
 import okhttp3.MediaType
+import okhttp3.OkHttpClient
 import java.io.File
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 /**
  *
  * Created by dongzhiyong on 16/9/25.
  */
 object Api {
+
+   
 
     fun get(url: String, callback: IAPICallBack) {
         OkHttpUtils.get()

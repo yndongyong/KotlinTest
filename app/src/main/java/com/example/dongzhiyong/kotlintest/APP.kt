@@ -1,6 +1,8 @@
 package com.example.dongzhiyong.kotlintest
 
 import android.app.Application
+import com.example.dongzhiyong.kotlintest.net.Api
+import com.example.dongzhiyong.kotlintest.net.Http
 import com.zhy.http.okhttp.OkHttpUtils
 import com.zhy.http.okhttp.log.LoggerInterceptor
 import okhttp3.OkHttpClient
@@ -19,20 +21,17 @@ class APP : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-
-        val crashHandler = CrashHandler.getInstance()
-        crashHandler.init(this.applicationContext)
-
+        initCrash()
         initOkHttp()
     }
 
     private fun initOkHttp() {
         // init okhttp
-        val okHttpClient = OkHttpClient.Builder()
-                .addInterceptor(LoggerInterceptor("OkHttp", false))
-                .connectTimeout(4, TimeUnit.SECONDS)
-                .readTimeout(5, TimeUnit.SECONDS)
-                .build()//other setting
-        OkHttpUtils.initClient(okHttpClient)
+        Http.init()
+    }
+
+    private fun initCrash() {
+        val crashHandler = CrashHandler.getInstance()
+        crashHandler.init(this.applicationContext)
     }
 }

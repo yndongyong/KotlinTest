@@ -1,6 +1,5 @@
 package com.example.dongzhiyong.kotlintest.extensions
 
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
 
@@ -11,16 +10,12 @@ import android.os.Looper
  */
 
 fun runAsync(action: () -> Unit) {
-    Thread(Runnable(action)).start()
+    TaskEngine.runOnThread { action() }
 }
 
 fun runAsync(delayMillis: Long, action: () -> Unit) {
-    //TODO 要使用excutorSerivers
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
-    } else {
-        throw UnsupportedOperationException("can not be invoke the fun at the os below 5.0")
-    }
+    //TODO 还未实现
+    throw UnsupportedOperationException("runAsync delayMillis unSupport ")
 }
 
 fun runUiThread(action: () -> Unit) {

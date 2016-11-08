@@ -29,8 +29,8 @@ class SecondActivity : AppCompatActivity() {
 
     private val mAdapter: GankIOAdapter by lazy {
         GankIOAdapter {
-            gankIo, position ->
-            this@SecondActivity.toast(gankIo.toString())
+            item, position ->
+            this@SecondActivity.toast(item.toString())
         }
     }
 

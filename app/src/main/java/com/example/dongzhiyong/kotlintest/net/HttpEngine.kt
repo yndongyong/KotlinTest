@@ -1,20 +1,22 @@
 package com.example.dongzhiyong.kotlintest.net
 
+import com.example.dongzhiyong.kotlintest.SecondActivity
+import com.example.dongzhiyong.kotlintest.model.GankInfo
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import com.zhy.http.okhttp.OkHttpUtils
+import com.zhy.http.okhttp.callback.Callback
 import com.zhy.http.okhttp.callback.StringCallback
 import com.zhy.http.okhttp.log.LoggerInterceptor
-import okhttp3.Call
-import okhttp3.MediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import okhttp3.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 /**
  * Created by Dong on 2016/11/4.
  */
-open class HttpEngine {
+open class HttpEngine<D> {
 
     companion object {
         val HTTP_METHOD_GET = 0
@@ -85,6 +87,24 @@ open class HttpEngine {
                 super.onAfter(id)
                 _onAfter(id)
             }
+        }
+
+        val callbackObjc = object : Callback<D>() {
+            override fun parseNetworkResponse(response: Response?, id: Int): D {
+                val temp = response?.body()?.string()
+                val type = object : TypeToken<List<GankInfo>>() {}.type
+                val response = GsonBuilder().create().fromJson<List<D>>(temp, type)
+                return response as D
+            }
+
+            override fun onResponse(response: D?, id: Int) {
+                throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onError(call: Call?, e: Exception?, id: Int) {
+                throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
         }
 
 
@@ -158,17 +178,22 @@ object Http {
         OkHttpUtils.initClient(okHttpClient)
     }
 
-    private val command: (Int, HttpEngine.() -> Unit) -> Unit = { method, req ->
-        val httpEngine = HttpEngine()
-        httpEngine.requestMethod = method
-        httpEngine.req()
+    /* private val command: (Int, HttpEngine.() -> Unit) -> Unit = { method, req ->
+         val httpEngine = HttpEngine()
+         httpEngine.requestMethod = method
+         httpEngine.req()
+         httpEngine.execute()
+     }
+ 
+     fun get(request: HttpEngine.() -> Unit): Unit = command(HttpEngine.HTTP_METHOD_GET, request)
+ 
+     fun post(request: HttpEngine.() -> Unit): Unit = command(HttpEngine.HTTP_METHOD_POST, request)*/
+
+
+    fun <D> post2(request: HttpEngine<D>.() -> Unit): Unit {
+        val httpEngine = HttpEngine<D>()
+        httpEngine.request()
         httpEngine.execute()
     }
-
-    fun get(request: HttpEngine.() -> Unit): Unit = command(HttpEngine.HTTP_METHOD_GET, request)
-
-    fun post(request: HttpEngine.() -> Unit): Unit = command(HttpEngine.HTTP_METHOD_POST, request)
-
-
 }
 

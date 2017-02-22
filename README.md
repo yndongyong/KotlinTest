@@ -145,9 +145,50 @@
 		var password: String by ShareData.prefrence(this, "key_password", "DEFAULT_vlaue")
 		当在代码中对password重新赋值时，会自动更新SharedPreferences中的值。
 
-8.   待续。。。
+8.   kotlin实现配置式的网络请求访问
+
+		用法：
+		val progressDialog = ProgressDialog(this@SecondActivity)
+
+        Http.get {
+            url = UrlUtils.gankIOUrl //reqeust url
+
+		    onHeaders {
+	                "Content-type" - "application/json" //http header
+	            }
+	    	//设置参数
+            onParams {
+                "username" - "dong"
+                "password" - 123
+            }
+           //请求开始请调用
+            onBefore {
+                progressDialog.show()
+            }
+	   		//请求成功	
+            onResponse {
+	    		//resStr 返回值
+                resStr ->
+                this@SecondActivity.toast("success :" + resStr)
+
+            }
+	    	//请求失败	
+	        onError {
+	            e ->
+				progressDialog.dismiss()
+	            this@SecondActivity.toast("onError :" + e.toString())
+	        }
+	   		//请求结束，onError和onAfter只有一个会执行	
+	        onAfter {
+	            progressDialog.dismiss()
+	        }
+
+        }
 
 9.   待续。。。
+
+
+10. 待续。。。   
         
 
 

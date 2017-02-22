@@ -76,20 +76,23 @@ class SecondActivity : AppCompatActivity() {
         val progressDialog = ProgressDialog(this@SecondActivity)
 
         Http.get {
-            url = UrlUtils.gankIOUrl
+            url = UrlUtils.gankIOUrl //reqeust url
 
+	    onHeaders {
+                "Content-type" - "application/json" //http header
+            }
+	    //设置参数
             onParams {
                 "username" - "dong"
                 "password" - 123
             }
-            onHeaders {
-                "Content-type" - "application/json"
-            }
+           //请求开始请调用
             onBefore {
                 progressDialog.show()
             }
-
+	   //请求成功	
             onResponse {
+	    //resStr 返回值
                 resStr ->
                 var data = JSONObject(resStr)
                 val optJSONArray = data.optJSONArray("results")
@@ -100,11 +103,13 @@ class SecondActivity : AppCompatActivity() {
                 this@SecondActivity.toast("success :" + resStr)
 
             }
+	    //请求失败	
             onError {
                 e ->
+		progressDialog.dismiss()
                 this@SecondActivity.toast("onError :" + e.toString())
             }
-
+	   //请求结束，onError和onAfter之后只有一个执行	
             onAfter {
                 progressDialog.dismiss()
             }

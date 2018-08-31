@@ -2,7 +2,7 @@ package com.example.dongzhiyong.kotlintest.extensions
 
 import android.content.Context
 import android.support.annotation.LayoutRes
-import android.support.design.widget.Snackbar
+//import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,24 +23,24 @@ fun ViewGroup.inflate(@LayoutRes layoutId: Int, attachToRoot: Boolean = false): 
 
 inline fun <reified T : View> View.findV(viewId: Int): View = findViewById(viewId) as T
 
-fun View.snack(message: String, duration: Int = Snackbar.LENGTH_SHORT) {
-    val snackbar = Snackbar.make(this, message, duration)
-    snackbar.show()
-}
+//fun View.snack(message: String, duration: Int = Snackbar.LENGTH_SHORT) {
+//    val snackbar = Snackbar.make(this, message, duration)
+//    snackbar.show()
+//}
+//
+//fun View.snack(message: String, duration: Int = Snackbar.LENGTH_SHORT, f: (Snackbar.() -> Unit)?) {
+//    val snackbar = Snackbar.make(this, message, duration)
+//
+//    if (f != null) {
+//        snackbar.f()
+//    }
+//    snackbar.show()
+//}
 
-fun View.snack(message: String, duration: Int = Snackbar.LENGTH_SHORT, f: (Snackbar.() -> Unit)?) {
-    val snackbar = Snackbar.make(this, message, duration)
-
-    if (f != null) {
-        snackbar.f()
-    }
-    snackbar.show()
-}
-
-fun Snackbar.action(action: String, color: Int? = null, listener: (View) -> Unit) {
-    setAction(action, listener)
-    color?.let { setActionTextColor(color) }
-}
+//fun Snackbar.action(action: String, color: Int? = null, listener: (View) -> Unit) {
+//    setAction(action, listener)
+//    color?.let { setActionTextColor(color) }
+//}
 
 fun View.toast(msg: String, time: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(ctx, msg, time).show()
@@ -59,6 +59,6 @@ fun View.onLongClick(action: (View?) -> Boolean) {
     }
 }
 
-fun ImageView.loadByUrl(url: String) {
-    Glide.with(this.ctx).load(url).into(this)
+fun ImageView.loadByUrl(url: String?) {
+    Glide.with(this.ctx).load(url?:"https://www.tapd.cn/img/new_wortable.png").into(this)
 }

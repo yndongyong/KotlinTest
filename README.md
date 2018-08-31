@@ -145,6 +145,7 @@
 		var password: String by ShareData.prefrence(this, "key_password", "DEFAULT_vlaue")
 		当在代码中对password重新赋值时，会自动更新SharedPreferences中的值。
 
+
 8.   kotlin实现配置式的网络请求访问
 
 		用法：
@@ -185,10 +186,42 @@
 
         }
 
-9.   待续。。。
+9.   FastAdaper
+	-  绑定单布局
+	
+	```
+	rl_list.bind(datas, R.layout.item_category_1){
+            Glide.with(context).load(it.getUrl()).into(iv_icon)
+            tv_category_name.text = it.description
+        }
+	```	
+	
+   -  对应多种布局
+	
+	```
+		rl_list.bind(datas)
+                .map(layoutId = R.layout.item_category_1, predicate = { it.type == 1 }) {
+                    Glide.with(context).load(it.getUrl()).into(iv_icon)
+                    tv_category_name.text = it.description
+                    setOnClickListener {
+                        Toast.makeText(context, "click 1", Toast.LENGTH_SHORT).show()
+                    }
+                    iv_icon.setOnClickListener {
+                        Toast.makeText(context, "click image", Toast.LENGTH_SHORT).show()
+                    }
+                }.map(layoutId = R.layout.item_category_2, predicate = { it.type == 2 }) {
+                    Glide.with(context).load(it.getUrl()).into(c2_iv_icon)
+                    c2_tv_category_name.text = it.description
+                    setOnClickListener {
+                        Toast.makeText(context, "click 2", Toast.LENGTH_SHORT).show()
+                    }
+                }
+	```
+
+10.   待续。。。
 
 
-10. 待续。。。   
+11. 待续。。。   
         
 
 

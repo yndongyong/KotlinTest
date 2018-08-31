@@ -22,10 +22,10 @@ fun Context.inflate(resId: Int, attachToRoot: Boolean = false): View {
 }
 
 val Fragment.act: Activity
-    get() = activity
+    get() = activity as Activity
 
 val Fragment.ctx: Context
-    get() = activity
+    get() = activity as Context
 
 fun Fragment.toast(msg: String, time: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this.act, msg, time).show()

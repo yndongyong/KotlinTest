@@ -98,7 +98,7 @@ open class FastAdapter<T>(private var items: List<T>,
 
             /**
              * 如果要封装某个item的局部刷新，不但这里需要改，Adapter的bindviewholder也不具备通用性了
-             * 要更新这总情况，还是再外部创建DiffUtil.calculateDiff比较方便
+             * 要更新这种情况，还是再外部创建DiffUtil.calculateDiff比较方便
              */
             /*override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
                 val args = Bundle ()
@@ -128,7 +128,7 @@ open class FastAdapter<T>(private var items: List<T>,
 
         }
 
-        //目前已经用不到了，但是为了之类拓展的
+        //目前已经用不到了，但是为了之后拓展的
         fun <T : View> getView(viewId:Int): T{
             var view = viewArrays.get(viewId)
             if (view == null) {
